@@ -1,0 +1,8 @@
+../Core/Src/snake_game.c:10:11:GetOppositeDirection	5
+../Core/Src/snake_game.c:20:6:SnakeGame_Init	2
+../Core/Src/snake_game.c:42:6:SnakeGame_Run	6
+../Core/Src/snake_game.c:74:6:SnakeGame_Update	5
+../Core/Src/snake_game.c:96:6:SnakeGame_Draw	5
+../Core/Src/snake_game.c:139:6:SnakeGame_GenerateFood	5
+../Core/Src/snake_game.c:160:6:SnakeGame_AutoMove	13
+../Core/Src/snake_game.c:214:9:SnakeGame_CheckCollision	6
