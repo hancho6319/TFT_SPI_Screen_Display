@@ -144,11 +144,12 @@ int main(void)
 //	  TFT_ClearScreen();
 //	      TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, IMAGE_HEIGHT);
 //
-//	      // Show full character set capabilities
-//	      TFT_printf(10, 10, TFT_WHITE, TFT_BLUE, 1, "UPPERCASE: ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-//	      TFT_printf(10, 25, TFT_GREEN, TRANSPARENT, 1, "lowercase: abcdefghijklmnopqrstuvwxyz");
-	      TFT_printf(10, 110, TFT_YELLOW, TRANSPARENT, 1, "Jollofyyj!!! Rice of Nigeria");
-	      TFT_printf(10, 80, TFT_CYAN, TRANSPARENT, 1, "1234567890!!1234567890");
+	      // Show full character set capabilities
+	      TFT_printf(5, 60, TFT_WHITE, TFT_BLUE, 1, "ABCDEFGHIHJKLMNOPQRSTUVWXYZE");
+	      TFT_printf(5, 80, TFT_GREEN, TRANSPARENT, 1, "lowercase: abcdefghijklmnopqrstuvwxyz");
+	      TFT_printf(5, 100, TFT_CYAN, TRANSPARENT, 1, "1234567890!!1234567890");
+	      TFT_printf(5, 120, TFT_YELLOW, TRANSPARENT, 1, "Jollof Rice of Nigeria");
+	      TFT_printf(5, 140, TFT_YELLOW, TRANSPARENT, 1, "JOLLOF RICE OF NIGERIA");
 //
 //	      // Mixed formatting examples
 //	      TFT_printf(10, 75, TFT_RED, TFT_BLACK, 2, "Hello World! 8x8 Font");
@@ -178,33 +179,33 @@ int main(void)
 //	      int level = 42;
 //	      TFT_printf(10, 265, TFT_BLACK, TFT_CYAN, 2, "User: %s, Level: %d", username, level);
 
-//	  for (int i = 0; i < 320;i++) {
+	  for (int i = 0; i < 320;i++) {
 
 		  // Write text with background restoration
 //	      int result = TFT_WriteTextOnBackgroundImage(i, 80, "if", TFT_WHITE,
 //	                                             image2, IMAGE_WIDTH, IMAGE_HEIGHT,
 //												 FONT_SIZE_MEDIUM, text_bg_buffer, TEXT_BUFFER_SIZE);
 //
-//	      if(i  < 100 && i > 0){
-//	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_GRAY, 1);
-//	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_WHITE, 1);
-//	    	  HAL_Delay(10);
-//
-////	      TFT_DrawClock(10, 5, 7, 28, 52, TFT_WHITE, TFT_BLUE, 3, 0);
-//	      }else if(i < 200 && i > 100){
-//
-//	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_WHITE, 1);
-//	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_GRAY, 1);
-//	    	  HAL_Delay(20);
-//	      }else if(i < 300 && i > 200){
-//	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_WHITE, 1);
-//	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_WHITE, 1);
-//	    	  HAL_Delay(50);
-//	      }else {
-//	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_GRAY, 1);
-//	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_GRAY, 1);
-//	    	  HAL_Delay(10);
-//	      }
+	      if(i  < 100 && i > 0){
+	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_GRAY, 1);
+	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_WHITE, 1);
+	    	  HAL_Delay(10);
+
+//	      TFT_DrawClock(10, 5, 7, 28, 52, TFT_WHITE, TFT_BLUE, 3, 0);
+	      }else if(i < 200 && i > 100){
+
+	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_WHITE, 1);
+	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_GRAY, 1);
+	    	  HAL_Delay(20);
+	      }else if(i < 300 && i > 200){
+	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_WHITE, 1);
+	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_WHITE, 1);
+	    	  HAL_Delay(50);
+	      }else {
+	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_GRAY, 1);
+	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_GRAY, 1);
+	    	  HAL_Delay(10);
+	      }
 //
 ////	      if (result == 0) {
 ////	    	  HAL_Delay(100);
@@ -213,7 +214,7 @@ int main(void)
 ////	          TFT_RestoreTextBackground(i, 80, text_bg_buffer, text_width, text_height);
 //////	          HAL_Delay(500);
 ////	          }
-//	  }
+	  }
 
 //	  TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, ICON_HIGHT);
 //	  j++;
