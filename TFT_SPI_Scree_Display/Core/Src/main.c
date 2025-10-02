@@ -20,6 +20,7 @@
 #include "main.h"
 #include "tft_display.h"
 #include "image.h"
+#include <string.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -44,13 +45,31 @@
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi1;
 
+// Conversation messages structure
+typedef struct {
+    const char* sender;
+    const char* message;
+    uint16_t color;
+} ChatMessage;
+
+// Conversation data
+const ChatMessage conversation[] = {
+    {"Alice", "Hey! How's your project going?", TFT_CYAN},
+    {"Bob", "It's going great! Just finished the TFT display driver.", TFT_GREEN},
+    {"Alice", "Wow, that's awesome! Can it show images?", TFT_CYAN},
+    {"Bob", "Yes! And text with different colors and sizes.", TFT_GREEN},
+    {"Alice", "Perfect! Let me test the conversation display...", TFT_CYAN},
+    {"Bob", "Looks like it's working! 🎉", TFT_GREEN},
+    {"System", "Conversation display test completed successfully!", TFT_YELLOW}
+};
+
+#define NUM_MESSAGES (sizeof(conversation) / sizeof(conversation[0]))
+
 // Background buffers for text - ADD THESE DECLARATIONS
 #define TEXT_BUFFER_SIZE 500 // Enough for medium text
 uint16_t text_bg_buffer[TEXT_BUFFER_SIZE];
 
-void SystemClock_Config(void);
-//void DisplayTextOnBackgroundDemo(void);
-//void AnimatedTextDemo(void);
+void DisplayConversation(void);
 
 /* USER CODE BEGIN PV */
 
@@ -67,12 +86,7 @@ static void MX_SPI1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 //
-int j = 0;
-//int min = 0;
-//int sec = 0;
-//char hr_str[3];
-//char min_str[3];
-//char sec_str[3];
+
 
 //void DisplayScaledTextDemo(void);
 //void AnimatedTextDemo(void);
@@ -120,11 +134,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 		  // Display background image
     /* USER CODE END WHILE */
-		      TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, IMAGE_HEIGHT);
-		      TFT_printf(10, 5, TFT_WHITE, TRANSPARENT, 1, "10:37PM");
-		      TFT_DrawSymbol(230, 5, BATTERY_50, TFT_WHITE, 2);
-		      TFT_DrawSymbol(250, 5, BATTERY_CHARGING, TFT_WHITE, 1);
-//
+
 //
 //	          uint16_t text_width, text_height;
 //	          // Calculate centered position
@@ -144,77 +154,9 @@ int main(void)
 //	  TFT_ClearScreen();
 //	      TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, IMAGE_HEIGHT);
 //
-	      // Show full character set capabilities
-	      TFT_printf(5, 60, TFT_WHITE, TFT_BLUE, 1, "ABCDEFGHIHJKLMNOPQRSTUVWXYZE");
-	      TFT_printf(5, 80, TFT_GREEN, TRANSPARENT, 1, "abcdefghijklmnopqrstuvwxyzab1a2b3c");
-	      TFT_printf(5, 100, TFT_CYAN, TRANSPARENT, 1, "1234567890!!1234567890");
-	      TFT_printf(5, 120, TFT_YELLOW, TRANSPARENT, 1, "Jollof Rice of Nigeria");
-	      TFT_printf(5, 140, TFT_YELLOW, TRANSPARENT, 1, "JOLLOF RICE OF NIGERIA");
-//
-//	      // Mixed formatting examples
-//	      TFT_printf(10, 75, TFT_RED, TFT_BLACK, 2, "Hello World! 8x8 Font");
-//	      TFT_printf(10, 95, TFT_WHITE, TFT_GREEN, 2, "Score: %08d", 12345678);
-//
-//	      // Mathematical expressions
-//	      float pi = 3.1415926535;
-//	      TFT_printf(10, 115, TFT_BLACK, TFT_YELLOW, 2, "π = %.6f", pi);
-//
-//	      // Complex formatting
-//	      TFT_printf(10, 135, TFT_CYAN, TFT_BLUE, 2, "Hex: 0x%04X, Binary: 0b%08b", 255, 170);
-//
-//	      // Multiple lines with different scales
-//	      TFT_printf(10, 160, TFT_WHITE, TRANSPARENT, 1, "Small text (scale 1)");
-//	      TFT_printf(10, 175, TFT_GREEN, TRANSPARENT, 2, "Medium text (scale 2)");
-//	      TFT_printf(10, 195, TFT_RED, TRANSPARENT, 3, "Large text (scale 3)");
-//
-//	      // Special characters demonstration
-//	      TFT_printf(10, 220, TFT_YELLOW, TFT_BLACK, 2, "Special: @#$%%&*{}[]<>");
-//
-//	      // Progress indicator
-//	      float progress = 75.5f;
-//	      TFT_printf(10, 245, TFT_WHITE, TFT_RED, 2, "Loading: %.1f%% complete", progress);
-//
-//	      // Mixed case with formatting
-//	      char *username = "JohnDoe";
-//	      int level = 42;
-//	      TFT_printf(10, 265, TFT_BLACK, TFT_CYAN, 2, "User: %s, Level: %d", username, level);
+      DisplayConversation();
+      HAL_Delay(5000); // Wait 5 seconds before restarting conversation
 
-	  for (int i = 0; i < 320;i++) {
-
-		  // Write text with background restoration
-//	      int result = TFT_WriteTextOnBackgroundImage(i, 80, "if", TFT_WHITE,
-//	                                             image2, IMAGE_WIDTH, IMAGE_HEIGHT,
-//												 FONT_SIZE_MEDIUM, text_bg_buffer, TEXT_BUFFER_SIZE);
-//
-	      if(i  < 100 && i > 0){
-	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_GRAY, 1);
-	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_WHITE, 1);
-	    	  HAL_Delay(10);
-
-//	      TFT_DrawClock(10, 5, 7, 28, 52, TFT_WHITE, TFT_BLUE, 3, 0);
-	      }else if(i < 200 && i > 100){
-
-	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_WHITE, 1);
-	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_GRAY, 1);
-	    	  HAL_Delay(20);
-	      }else if(i < 300 && i > 200){
-	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_WHITE, 1);
-	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_WHITE, 1);
-	    	  HAL_Delay(50);
-	      }else {
-	    	  TFT_DrawSymbol(280, 5, ARROW_DOWN, TFT_GRAY, 1);
-	    	  TFT_DrawSymbol(290, 5, ARROW_UP, TFT_GRAY, 1);
-	    	  HAL_Delay(10);
-	      }
-//
-////	      if (result == 0) {
-////	    	  HAL_Delay(100);
-////
-////	          // Restore the background
-////	          TFT_RestoreTextBackground(i, 80, text_bg_buffer, text_width, text_height);
-//////	          HAL_Delay(500);
-////	          }
-	  }
 
 //	  TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, ICON_HIGHT);
 //	  j++;
@@ -230,6 +172,96 @@ int main(void)
   /* USER CODE END 3 */
 }
 
+void DisplayConversation(void) {
+    uint16_t start_y = 30;
+    uint16_t bubble_width = 200;
+    uint16_t bubble_height = 50;
+    uint16_t bubble_spacing = 10;
+    uint16_t text_padding = 8;
+
+    // Display background image
+    TFT_BackgroundImage(0, 0, image1, TFT_WIDTH_LANDSCAPE, TFT_HEIGHT_LANDSCAPE);
+
+    // Display conversation title
+    TFT_printf(10, 10, TFT_WHITE, TRANSPARENT, 2, "Conversations");
+    TFT_DrawRect(5, 5, TFT_WIDTH_LANDSCAPE - 10, 25, TFT_WHITE);
+
+    // Display each message in the conversation
+    for (int i = 0; i < NUM_MESSAGES; i++) {
+        uint16_t current_y = start_y + (i * (bubble_height + bubble_spacing));
+
+        // Alternate between left and right alignment for visual effect
+        uint16_t bubble_x;
+        uint16_t text_x;
+        uint16_t bubble_color;
+
+        if (i % 2 == 0) {
+            // Left side (Alice/System)
+            bubble_x = 10;
+            text_x = bubble_x + text_padding;
+            bubble_color = TFT_BLUE;
+        } else {
+            // Right side (Bob)
+            bubble_x = TFT_WIDTH_LANDSCAPE - bubble_width - 10;
+            text_x = bubble_x + text_padding;
+            bubble_color = TFT_RED;
+        }
+
+        // Draw message bubble
+        TFT_DrawFilledRect(bubble_x, current_y, bubble_width, bubble_height, bubble_color);
+        TFT_DrawRect(bubble_x, current_y, bubble_width, bubble_height, TFT_WHITE);
+
+        // Draw sender name
+        TFT_printf(text_x, current_y + 5, TFT_WHITE, TRANSPARENT, 1, "%s:", conversation[i].sender);
+
+        // Draw message text (wrap if needed)
+        const char* message = conversation[i].message;
+        uint16_t msg_width, msg_height;
+        TFT_CalculateTextSize(message, 2, &msg_width, &msg_height);
+
+        if (msg_width > (bubble_width - text_padding * 2)) {
+            // Message is too long, split into two lines
+            char line1[64] = {0};
+            char line2[64] = {0};
+            int split_pos = 0;
+
+            // Find a good split point (space character)
+            for (int j = bubble_width / 12; j > 0; j--) { // Approximate character count
+                if (message[j] == ' ') {
+                    split_pos = j;
+                    break;
+                }
+            }
+
+            if (split_pos > 0) {
+                strncpy(line1, message, split_pos);
+                strcpy(line2, message + split_pos + 1);
+
+                TFT_printf(text_x, current_y + 15, conversation[i].color, TRANSPARENT, 1, "%s", line1);
+                TFT_printf(text_x, current_y + 35, conversation[i].color, TRANSPARENT, 1, "%s", line2);
+            } else {
+                // No space found, just truncate
+                TFT_printf(text_x, current_y + 20, conversation[i].color, TRANSPARENT, 1, "%.*s...",
+                          (bubble_width - text_padding * 2) / 12, message);
+            }
+        } else {
+            // Message fits in one line
+            TFT_printf(text_x, current_y + 20, conversation[i].color, TRANSPARENT, 1, "%s", message);
+        }
+
+        // Small delay between messages for animation effect
+        HAL_Delay(800);
+    }
+
+    // Display footer with status
+    TFT_DrawFilledRect(5, TFT_HEIGHT_LANDSCAPE - 25, TFT_WIDTH_LANDSCAPE - 10, 20, TFT_BLACK);
+    TFT_printf(10, TFT_HEIGHT_LANDSCAPE - 20, TFT_GREEN, TRANSPARENT, 1,
+               "Messages: %d | Tap to continue...", NUM_MESSAGES);
+
+    // Draw some decorative elements
+    TFT_DrawSymbol(280, TFT_HEIGHT_LANDSCAPE - 40, HEART, TFT_RED, 2);
+    TFT_DrawSymbol(300, TFT_HEIGHT_LANDSCAPE - 40, SMILEY_FACE, TFT_YELLOW, 2);
+}
 
 /**
   * @brief System Clock Configuration
