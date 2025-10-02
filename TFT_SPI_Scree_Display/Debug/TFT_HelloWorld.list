@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00005008  080001a0  080001a0  000011a0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       000264d0  080051a8  080051a8  000061a8  2**3
+  2 .rodata       000264c8  080051a8  080051a8  000061a8  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  0802b678  0802b678  0002d060  2**0
+  3 .ARM.extab    00000000  0802b670  0802b670  0002d060  2**0
                   CONTENTS, READONLY
-  4 .ARM          00000008  0802b678  0802b678  0002c678  2**2
+  4 .ARM          00000008  0802b670  0802b670  0002c670  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  0802b680  0802b680  0002d060  2**0
+  5 .preinit_array 00000000  0802b678  0802b678  0002d060  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  0802b680  0802b680  0002c680  2**2
+  6 .init_array   00000004  0802b678  0802b678  0002c678  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  0802b684  0802b684  0002c684  2**2
+  7 .fini_array   00000004  0802b67c  0802b67c  0002c67c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         00000060  20000000  0802b688  0002d000  2**2
+  8 .data         00000060  20000000  0802b680  0002d000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000001c4  20000060  0802b6e8  0002d060  2**2
+  9 .bss          000001c4  20000060  0802b6e0  0002d060  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000224  0802b6e8  0002d224  2**0
+ 10 ._user_heap_stack 00000604  20000224  0802b6e0  0002d224  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002d060  2**0
                   CONTENTS, READONLY
@@ -1369,7 +1369,7 @@ int main(void)
  800100a:	213c      	movs	r1, #60	@ 0x3c
  800100c:	2005      	movs	r0, #5
  800100e:	f000 ff89 	bl	8001f24 <TFT_printf>
-	      TFT_printf(5, 80, TFT_GREEN, TRANSPARENT, 1, "lowercase: abcdefghijklmnopqrstuvwxyz");
+	      TFT_printf(5, 80, TFT_GREEN, TRANSPARENT, 1, "abcdefghijklmnopqrstuvwxyzab1a2b3c");
  8001012:	4b57      	ldr	r3, [pc, #348]	@ (8001170 <main+0x1e8>)
  8001014:	9301      	str	r3, [sp, #4]
  8001016:	2301      	movs	r3, #1
@@ -1536,13 +1536,13 @@ int main(void)
  8001160:	db86      	blt.n	8001070 <main+0xe8>
 	      TFT_printf(5, 60, TFT_WHITE, TFT_BLUE, 1, "ABCDEFGHIHJKLMNOPQRSTUVWXYZE");
  8001162:	e74a      	b.n	8000ffa <main+0x72>
- 8001164:	08005240 	.word	0x08005240
+ 8001164:	0800523c 	.word	0x0800523c
  8001168:	080051a8 	.word	0x080051a8
  800116c:	080051b0 	.word	0x080051b0
  8001170:	080051d0 	.word	0x080051d0
- 8001174:	080051f8 	.word	0x080051f8
- 8001178:	08005210 	.word	0x08005210
- 800117c:	08005228 	.word	0x08005228
+ 8001174:	080051f4 	.word	0x080051f4
+ 8001178:	0800520c 	.word	0x0800520c
+ 800117c:	08005224 	.word	0x08005224
 
 08001180 <SystemClock_Config>:
 /**
@@ -2901,7 +2901,7 @@ void TFT_DrawSymbol(uint16_t x, uint16_t y, uint8_t symbol, uint16_t color, uint
  8001916:	3714      	adds	r7, #20
  8001918:	46bd      	mov	sp, r7
  800191a:	bd90      	pop	{r4, r7, pc}
- 800191c:	0802b398 	.word	0x0802b398
+ 800191c:	0802b394 	.word	0x0802b394
 
 08001920 <TFT_DrawBatteryWithBars>:
 
@@ -3890,7 +3890,7 @@ void TFT_printf(uint16_t x, uint16_t y, uint16_t color, uint16_t bg_color, uint8
  8002022:	46bd      	mov	sp, r7
  8002024:	bd90      	pop	{r4, r7, pc}
  8002026:	bf00      	nop
- 8002028:	0802b338 	.word	0x0802b338
+ 8002028:	0802b334 	.word	0x0802b334
 
 0800202c <TFT_CalculateTextSize>:
  * @example:
@@ -3988,7 +3988,7 @@ void TFT_CalculateTextSize(const char *text, uint8_t font_scale, uint16_t *width
  80020b8:	46bd      	mov	sp, r7
  80020ba:	f85d 7b04 	ldr.w	r7, [sp], #4
  80020be:	4770      	bx	lr
- 80020c0:	0802b338 	.word	0x0802b338
+ 80020c0:	0802b334 	.word	0x0802b334
 
 080020c4 <TFT_DrawCharScaled>:
  * This function draws a single character from the 12x12 font array.
@@ -4212,7 +4212,7 @@ static void TFT_DrawCharScaled(uint16_t x, uint16_t y, char c, uint16_t color, u
  800225a:	46bd      	mov	sp, r7
  800225c:	bd90      	pop	{r4, r7, pc}
  800225e:	bf00      	nop
- 8002260:	0802aa50 	.word	0x0802aa50
+ 8002260:	0802aa4c 	.word	0x0802aa4c
 
 08002264 <TFT_BackgroundImage>:
 
@@ -4343,7 +4343,7 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  8002342:	4770      	bx	lr
  8002344:	20000000 	.word	0x20000000
  8002348:	20000060 	.word	0x20000060
- 800234c:	0802b688 	.word	0x0802b688
+ 800234c:	0802b680 	.word	0x0802b680
  8002350:	20000060 	.word	0x20000060
  8002354:	20000224 	.word	0x20000224
 
@@ -5815,7 +5815,7 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  8003036:	bf00      	nop
  8003038:	40023c00 	.word	0x40023c00
  800303c:	40023800 	.word	0x40023800
- 8003040:	0802aa40 	.word	0x0802aa40
+ 8003040:	0802aa3c 	.word	0x0802aa3c
  8003044:	20000000 	.word	0x20000000
  8003048:	20000008 	.word	0x20000008
 
@@ -6690,10 +6690,10 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  80037f2:	4798      	blx	r3
  80037f4:	3601      	adds	r6, #1
  80037f6:	e7f2      	b.n	80037de <__libc_init_array+0x1e>
- 80037f8:	0802b680 	.word	0x0802b680
- 80037fc:	0802b680 	.word	0x0802b680
- 8003800:	0802b680 	.word	0x0802b680
- 8003804:	0802b684 	.word	0x0802b684
+ 80037f8:	0802b678 	.word	0x0802b678
+ 80037fc:	0802b678 	.word	0x0802b678
+ 8003800:	0802b678 	.word	0x0802b678
+ 8003804:	0802b67c 	.word	0x0802b67c
 
 08003808 <__retarget_lock_acquire_recursive>:
  8003808:	4770      	bx	lr
@@ -7199,11 +7199,11 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  8003c90:	4638      	mov	r0, r7
  8003c92:	f000 f879 	bl	8003d88 <_printf_i>
  8003c96:	e7ed      	b.n	8003c74 <_svfiprintf_r+0x1c0>
- 8003c98:	0802b468 	.word	0x0802b468
- 8003c9c:	0802b472 	.word	0x0802b472
+ 8003c98:	0802b464 	.word	0x0802b464
+ 8003c9c:	0802b46e 	.word	0x0802b46e
  8003ca0:	00000000 	.word	0x00000000
  8003ca4:	080039fd 	.word	0x080039fd
- 8003ca8:	0802b46e 	.word	0x0802b46e
+ 8003ca8:	0802b46a 	.word	0x0802b46a
 
 08003cac <_printf_common>:
  8003cac:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -7532,8 +7532,8 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  8003fb4:	2500      	movs	r5, #0
  8003fb6:	f104 0619 	add.w	r6, r4, #25
  8003fba:	e7f5      	b.n	8003fa8 <_printf_i+0x220>
- 8003fbc:	0802b479 	.word	0x0802b479
- 8003fc0:	0802b48a 	.word	0x0802b48a
+ 8003fbc:	0802b475 	.word	0x0802b475
+ 8003fc0:	0802b486 	.word	0x0802b486
 
 08003fc4 <memmove>:
  8003fc4:	4288      	cmp	r0, r1
@@ -8318,7 +8318,7 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  8004820:	3ff921fb 	.word	0x3ff921fb
  8004824:	413921fb 	.word	0x413921fb
  8004828:	3fe00000 	.word	0x3fe00000
- 800482c:	0802b49c 	.word	0x0802b49c
+ 800482c:	0802b498 	.word	0x0802b498
  8004830:	7fefffff 	.word	0x7fefffff
  8004834:	ea4f 5528 	mov.w	r5, r8, asr #20
  8004838:	f2a5 4516 	subw	r5, r5, #1046	@ 0x416
@@ -8384,7 +8384,7 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  80048e4:	e740      	b.n	8004768 <__ieee754_rem_pio2+0x270>
  80048e6:	bf00      	nop
  80048e8:	41700000 	.word	0x41700000
- 80048ec:	0802b51c 	.word	0x0802b51c
+ 80048ec:	0802b518 	.word	0x0802b518
 
 080048f0 <fabs>:
  80048f0:	ec51 0b10 	vmov	r0, r1, d0
@@ -8672,13 +8672,13 @@ void TFT_BackgroundImage(uint16_t x, uint16_t y, const uint16_t *background_imag
  8004c0c:	f3af 8000 	nop.w
 	...
  8004c1c:	3ff00000 	.word	0x3ff00000
- 8004c20:	0802b668 	.word	0x0802b668
+ 8004c20:	0802b660 	.word	0x0802b660
  8004c24:	40200000 	.word	0x40200000
  8004c28:	3ff00000 	.word	0x3ff00000
  8004c2c:	3e700000 	.word	0x3e700000
  8004c30:	41700000 	.word	0x41700000
  8004c34:	3fe00000 	.word	0x3fe00000
- 8004c38:	0802b628 	.word	0x0802b628
+ 8004c38:	0802b620 	.word	0x0802b620
  8004c3c:	1acb      	subs	r3, r1, r3
  8004c3e:	e7de      	b.n	8004bfe <__kernel_rem_pio2+0x2fe>
  8004c40:	f108 32ff 	add.w	r2, r8, #4294967295

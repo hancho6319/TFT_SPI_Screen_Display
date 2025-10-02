@@ -146,7 +146,7 @@ int main(void)
 //
 	      // Show full character set capabilities
 	      TFT_printf(5, 60, TFT_WHITE, TFT_BLUE, 1, "ABCDEFGHIHJKLMNOPQRSTUVWXYZE");
-	      TFT_printf(5, 80, TFT_GREEN, TRANSPARENT, 1, "lowercase: abcdefghijklmnopqrstuvwxyz");
+	      TFT_printf(5, 80, TFT_GREEN, TRANSPARENT, 1, "abcdefghijklmnopqrstuvwxyzab1a2b3c");
 	      TFT_printf(5, 100, TFT_CYAN, TRANSPARENT, 1, "1234567890!!1234567890");
 	      TFT_printf(5, 120, TFT_YELLOW, TRANSPARENT, 1, "Jollof Rice of Nigeria");
 	      TFT_printf(5, 140, TFT_YELLOW, TRANSPARENT, 1, "JOLLOF RICE OF NIGERIA");
