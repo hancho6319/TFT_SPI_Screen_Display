@@ -1,0 +1,10 @@
+../Core/Src/touch.c:20:16:TOUCH_SPI_Transfer	1
+../Core/Src/touch.c:26:6:TOUCH_Init	1
+../Core/Src/touch.c:52:9:TOUCH_ReadRaw	6
+../Core/Src/touch.c:97:9:TOUCH_Read	8
+../Core/Src/touch.c:139:6:TOUCH_SetOrientation	1
+../Core/Src/touch.c:143:9:TOUCH_GetOrientation	1
+../Core/Src/touch.c:147:6:TOUCH_Calibrate	1
+../Core/Src/touch.c:155:9:TOUCH_IsPressed	1
+../Core/Src/touch.c:159:9:TOUCH_GetState	4
+../Core/Src/touch.c:185:10:TOUCH_ReadPressure	3

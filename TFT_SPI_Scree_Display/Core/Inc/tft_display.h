@@ -80,11 +80,17 @@
 #define TFT_GRAY        0x8410
 #define TFT_LIGHT_BLUE  0xFC00
 
-// Display dimensions
-#define TFT_WIDTH_PORTRAIT   240
-#define TFT_HEIGHT_PORTRAIT  320
-#define TFT_WIDTH_LANDSCAPE  320
-#define TFT_HEIGHT_LANDSCAPE 240
+//// Display dimensions 320x240
+//#define TFT_WIDTH_PORTRAIT   240
+//#define TFT_HEIGHT_PORTRAIT  320
+//#define TFT_WIDTH_LANDSCAPE  320
+//#define TFT_HEIGHT_LANDSCAPE 240
+
+// Display dimensions 240x320
+#define TFT_WIDTH_PORTRAIT   320
+#define TFT_HEIGHT_PORTRAIT  240
+#define TFT_WIDTH_LANDSCAPE  240
+#define TFT_HEIGHT_LANDSCAPE 320
 
 // GPIO Pins
 #define TFT_CS_PIN   GPIO_PIN_4
@@ -340,8 +346,5 @@ void TFT_CalculateTextSize(const char *text, uint8_t font_scale, uint16_t *width
  * @example TFT_SetRotation(TFT_ROTATION_90); // Landscape mode
  */
 void TFT_SetRotation(uint8_t rotation);
-
-
-
 
 #endif

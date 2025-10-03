@@ -35,3 +35,5 @@
 ../Core/Src/tft_display.c:1076:13:TFT_DrawCharScaled	10
 ../Core/Src/tft_display.c:1111:6:TFT_BackgroundImage	2
 ../Core/Src/tft_display.c:1136:6:TFT_AddIcon	9
+../Core/Src/tft_display.c:1186:6:TFT_DrawLine	7
+../Core/Src/tft_display.c:1214:6:TFT_DrawThickLine	3

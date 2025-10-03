@@ -20,6 +20,7 @@
 #include "main.h"
 #include "tft_display.h"
 #include "image.h"
+#include "touch.h"
 #include <string.h>
 
 /* Private includes ----------------------------------------------------------*/
@@ -70,6 +71,7 @@ const ChatMessage conversation[] = {
 uint16_t text_bg_buffer[TEXT_BUFFER_SIZE];
 
 void DisplayConversation(void);
+void TouchDemo(void);
 
 /* USER CODE BEGIN PV */
 
@@ -104,9 +106,6 @@ int main(void)
 
   /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* USER CODE BEGIN Init */
@@ -126,65 +125,71 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   TFT_Init();
-  TFT_SetRotation(TFT_ROTATION_0);
-  TFT_InvertColors(TRUE);
+  TOUCH_Init();
+
+  TFT_SetRotation(TFT_ROTATION_90);
+  TOUCH_SetOrientation(TOUCH_PORTRAIT);
+  TFT_InvertColors(FALSE);
   /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-		  // Display background image
-    /* USER CODE END WHILE */
-
-//
-//	          uint16_t text_width, text_height;
-//	          // Calculate centered position
-//	          TFT_CalculateTextSize("if", FONT_SIZE_MEDIUM, &text_width, &text_height);
-////	          uint16_t x = (IMAGE_WIDTH - text_width) / 2;
-//
-//	          TFT_WriteTextTransparent(40, 100, "123456789", TFT_WHITE, FONT_SIZE_MEDIUM);
-//	          TFT_WriteTextTransparent(40, 120, "!@#$%^&*()+-=[]{}|;:',.<>/?", TFT_WHITE, FONT_SIZE_MEDIUM);
-//	          TFT_WriteTextTransparent(40, 140, "Kano, State Nigeria!", TFT_WHITE, FONT_SIZE_MEDIUM);
-//
-//	          TFT_WriteTextTransparent(10, 220, "MENU", TFT_WHITE, FONT_SIZE_MEDIUM);
-//	          TFT_WriteTextTransparent(220, 220, "SETTINGS", TFT_WHITE, FONT_SIZE_MEDIUM);
 
   while (1)
   {
 
-//	  TFT_ClearScreen();
-//	      TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, IMAGE_HEIGHT);
-//
+      TouchDemo();
+//      HAL_Delay(10);
+
       DisplayConversation();
       HAL_Delay(5000); // Wait 5 seconds before restarting conversation
 
-
-//	  TFT_BackgroundImage(0, 0, image4, IMAGE_WIDTH, ICON_HIGHT);
-//	  j++;
-//	  if (j == 5)j=0;
-
-//	  DisplayScaledTextDemo();
-//	  HAL_Delay(4000);
-//
-//	  AnimatedTextDemo();
-//	  HAL_Delay(3000);
-    /* USER CODE BEGIN 3 */
   }
+
   /* USER CODE END 3 */
 }
+
+void TouchDemo(void) {
+    static uint16_t last_x = 0, last_y = 0;
+    Touch_State touch;
+
+    if (TOUCH_GetState(&touch)) {
+        if (touch.pressed) {
+            // Draw touch point
+            TFT_DrawFilledRect(touch.x - 2, touch.y - 2, 5, 5, TFT_RED);
+
+            // Display coordinates
+            TFT_printf(10, 10, TFT_WHITE, TFT_BLACK, 1,
+                      "X: %3d Y: %3d     ", touch.x, touch.y);
+
+            // Draw line from last point
+            if (last_x != 0 && last_y != 0) {
+                TFT_DrawLine(last_x, last_y, touch.x, touch.y, TFT_GREEN);
+            }
+
+            last_x = touch.x;
+            last_y = touch.y;
+        } else {
+            // Touch released
+            TFT_printf(10, 25, TFT_WHITE, TFT_BLACK, 1, "Released!        ");
+            last_x = 0;
+            last_y = 0;
+        }
+    }
+}
+
 
 void DisplayConversation(void) {
     uint16_t start_y = 30;
     uint16_t bubble_width = 200;
-    uint16_t bubble_height = 50;
-    uint16_t bubble_spacing = 10;
+    uint16_t bubble_height = 45;
+    uint16_t bubble_spacing = 5;
     uint16_t text_padding = 8;
 
     // Display background image
-    TFT_BackgroundImage(0, 0, image1, TFT_WIDTH_LANDSCAPE, TFT_HEIGHT_LANDSCAPE);
+    TFT_BackgroundImage(0, 0, imageA1, TFT_HEIGHT_LANDSCAPE, TFT_WIDTH_LANDSCAPE);
 
     // Display conversation title
-    TFT_printf(10, 10, TFT_WHITE, TRANSPARENT, 2, "Conversations");
-    TFT_DrawRect(5, 5, TFT_WIDTH_LANDSCAPE - 10, 25, TFT_WHITE);
+    TFT_printf(10, 5, TFT_WHITE, TRANSPARENT, 2, "Conversations");
+    TFT_DrawRect(5, 0, TFT_WIDTH_LANDSCAPE - 10, 25, TFT_WHITE);
 
     // Display each message in the conversation
     for (int i = 0; i < NUM_MESSAGES; i++) {
@@ -212,7 +217,7 @@ void DisplayConversation(void) {
         TFT_DrawRect(bubble_x, current_y, bubble_width, bubble_height, TFT_WHITE);
 
         // Draw sender name
-        TFT_printf(text_x, current_y + 5, TFT_WHITE, TRANSPARENT, 1, "%s:", conversation[i].sender);
+        TFT_printf(text_x, current_y + 4, TFT_WHITE, TRANSPARENT, 1, "%s:", conversation[i].sender);
 
         // Draw message text (wrap if needed)
         const char* message = conversation[i].message;
@@ -237,8 +242,8 @@ void DisplayConversation(void) {
                 strncpy(line1, message, split_pos);
                 strcpy(line2, message + split_pos + 1);
 
-                TFT_printf(text_x, current_y + 15, conversation[i].color, TRANSPARENT, 1, "%s", line1);
-                TFT_printf(text_x, current_y + 35, conversation[i].color, TRANSPARENT, 1, "%s", line2);
+                TFT_printf(text_x, current_y + 16, conversation[i].color, TRANSPARENT, 1, "%s", line1);
+                TFT_printf(text_x, current_y + 30, conversation[i].color, TRANSPARENT, 1, "%s", line2);
             } else {
                 // No space found, just truncate
                 TFT_printf(text_x, current_y + 20, conversation[i].color, TRANSPARENT, 1, "%.*s...",
